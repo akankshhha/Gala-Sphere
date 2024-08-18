@@ -7,7 +7,7 @@ const HeroSection: React.FC = () => {
   return (
     <section className="bg-gradient-to-r from-[#FF6F61] to-[#C71585] text-white text-center py-12 px-4 sm:px-6 md:px-8">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Welcome to the Met Gala</h1>
-      <p className="text-base sm:text-lg md:text-xl mb-8">Explore the latest trends and memorable moments from the Met Gala.</p>
+      <p className="text-base sm:text-lg md:text-xl mb-8">The Metropolitan Museum of Art (The Met) is a world-renowned institution in New York City, showcasing an extensive collection of art spanning over 5,000 years of history and culture.</p>
       <button className="bg-white text-[#C71585] px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold text-base sm:text-lg">
         Discover More
       </button>
@@ -16,14 +16,29 @@ const HeroSection: React.FC = () => {
 };
 
 const TabsSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('tab1')
+  const [activeTab, setActiveTab] = useState('tab1');
 
   return (
     <section className="py-12 px-4 sm:px-6 md:px-8 max-w-2xl mx-auto">
       <div className="flex flex-wrap border-b border-gray-300 mb-6">
-        <button className="py-2 px-4 text-base sm:text-lg font-medium cursor-pointer hover:bg-gray-200" onClick={() => setActiveTab('tab1')}>Tab 1</button>
-        <button className="py-2 px-4 text-base sm:text-lg font-medium cursor-pointer hover:bg-gray-200" onClick={() => setActiveTab('tab2')} >Tab 2</button>
-        <button className="py-2 px-4 text-base sm:text-lg font-medium cursor-pointer hover:bg-gray-200" onClick={() => setActiveTab('tab3')}>Tab 3</button>
+        <button
+          className={`py-2 px-4 text-base sm:text-lg font-medium cursor-pointer ${activeTab === 'tab1' ? 'bg-gradient-to-r from-pink-400 to-purple-500 text-white' : 'hover:bg-gray-200 text-gray-800'} rounded-t-md`}
+          onClick={() => setActiveTab('tab1')}
+        >
+          Tab 1
+        </button>
+        <button
+          className={`py-2 px-4 text-base sm:text-lg font-medium cursor-pointer ${activeTab === 'tab2' ? 'bg-gradient-to-r from-pink-400 to-purple-500 text-white' : 'hover:bg-gray-200 text-gray-800'} rounded-t-md`}
+          onClick={() => setActiveTab('tab2')}
+        >
+          Tab 2
+        </button>
+        <button
+          className={`py-2 px-4 text-base sm:text-lg font-medium cursor-pointer ${activeTab === 'tab3' ? 'bg-gradient-to-r from-pink-400 to-purple-500 text-white' : 'hover:bg-gray-200 text-gray-800'} rounded-t-md`}
+          onClick={() => setActiveTab('tab3')}
+        >
+          Tab 3
+        </button>
       </div>
       <div>
         {/* Content for each tab */}
@@ -49,6 +64,7 @@ const TabsSection: React.FC = () => {
     </section>
   );
 };
+
 
 const PhotoGallerySection: React.FC = () => {
   return (

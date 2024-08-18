@@ -1,17 +1,21 @@
+"use client";
+
 import Link from 'next/link';
 
 const Header: React.FC = () => {
   return (
-    <header className="bg-gradient-to-r from-[#FF6F61] via-[#D83A56] to-[#C71585] text-white p-6 shadow-lg">
-      <nav className="flex items-center justify-between">
-        <div className="text-2xl font-bold">
+    <header className="sticky top-0 bg-gradient-to-r from-[#FF6F61] to-[#C71585] text-white py-4 px-4 sm:px-6 md:px-8 z-50">
+      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4">
           <Link href="/">Met Gala</Link>
-        </div>
-        <div className="space-x-4">
-          <Link href="/about" className="hover:text-gray-200">About</Link>
-          <Link href="/contact" className="hover:text-gray-200">Contact</Link>
-        </div>
-      </nav>
+        </h1>
+        <nav className="flex space-x-4">
+          <Link href="/" className="hover:underline">Overview</Link>
+          <Link href="/about" className="hover:underline">About</Link>
+          <Link href="/departments" className="hover:underline">Departments</Link>
+          <Link href="/gallery" className="hover:underline">Gallery</Link>
+        </nav>
+      </div>
     </header>
   );
 };
