@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     <header className="sticky top-0 bg-gradient-to-r from-[#FF6F61] to-[#C71585] text-white py-4 px-4 sm:px-6 md:px-8 z-50">
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
         <h1 className="text-2xl sm:text-3xl font-bold mb-4">
-          <Link href="/">Met Gala</Link>
+          <Link href="/">The Metropolitan Museum of Art</Link>
         </h1>
         <nav className="flex space-x-4">
           <Link href="/" className="hover:underline">Overview</Link>
