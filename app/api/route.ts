@@ -52,3 +52,6 @@ export async function getObjectDetails(objectId: number): Promise<any> {
   return data;
 }
 
+
+
+
