@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="bg-gradient-to-r from-[#FF6F61] to-[#C71585] text-white text-center py-12 px-4 sm:px-6 md:px-8  mt-20">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Step into The Met's World of Art</h1>
+    <section className="bg-black text-white text-center py-12 px-4 sm:px-6 md:px-8">
+      <h1 className="text-4xl sm:text-4xl md:text-5xl font-bold mb-4">Step into The Met's World of Art</h1>
       <p className="text-base sm:text-lg md:text-xl mb-8">Discover the rich history and exceptional artistry of The Met's unparalleled collection.</p>
       <button className="bg-white text-[#C71585] px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold text-base sm:text-lg">
         Discover
@@ -58,7 +58,7 @@ const TabsSection: React.FC = () => {
           <div className="p-6 bg-white shadow-md rounded-lg mb-6">
             <p>Houses a vast and diverse collection of art from various cultures and historical periods.
 
-</p>
+            </p>
           </div>
         )}
         {activeTab === 'tab3' && (
@@ -79,8 +79,8 @@ const TabsSection: React.FC = () => {
 
 const PhotoGallerySection: React.FC = () => {
   return (
-    <section className="py-12 px-4 sm:px-6 md:px-8">
-      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">Photo Gallery</h2>
+    <section className="py-12 px-4 sm:px-6 md:px-8  w-10/12 mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">Visual Exhibit</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div className="relative w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
           <Image src="/assets/images/met1.jpeg" alt="Gallery Photo 1" layout="fill" objectFit="cover" />
@@ -99,7 +99,7 @@ const PhotoGallerySection: React.FC = () => {
 
 export default function Home() {
   return (
-    <main className=" min-h-screen bg-[#FAFAFA] w-9/12 mx-auto">
+    <main className=" min-h-screen bg-[#FAFAFA]">
       <HeroSection />
       <TabsSection />
       <PhotoGallerySection />

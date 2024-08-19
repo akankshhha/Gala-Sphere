@@ -2,4 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* .radial-gr {
+    background: rgb(221,235,237);
+    background: radial-gradient(circle, rgba(221,235,237,1) 0%, rgba(249,204,223,1) 100%);
+} */
