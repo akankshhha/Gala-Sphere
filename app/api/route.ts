@@ -23,7 +23,7 @@ export async function getDepartments(): Promise<any> {
 }
 
 // Function to get the list of objects under the same department ID
-export async function getObjectIDs(departmentId: number): Promise<number[]> {
+export async function getObjectIDs(departmentId: number, start: number, end:number): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/objects?departmentIds=${departmentId}`, {
     method: 'GET',
     headers: {
@@ -34,8 +34,10 @@ export async function getObjectIDs(departmentId: number): Promise<number[]> {
     throw new Error('Failed to fetch object IDs');
   }
   const data = await response.json();
-  return data.objectIDs || [];
-}
+  return {
+    objectIDs: data.objectIDs.slice(start, end) || [],
+    total: data.total || 0
+  };}
 
 // Function to get the object details based on objectId
 export async function getObjectDetails(objectId: number): Promise<any> {

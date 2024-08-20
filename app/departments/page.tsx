@@ -18,12 +18,10 @@ const Departments: React.FC = async () => {
                         <Link key={department.departmentId} href={`/departments/${department.departmentId}`}> 
                             <DepartmentCard deptname={department.displayName} />
                         </Link>
-
                     )
-                }
-                )}
+                })
+            }
             </div>
-
         </div>
     )
 }
