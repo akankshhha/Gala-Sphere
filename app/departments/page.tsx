@@ -4,7 +4,6 @@ import DepartmentCard from '../components/static/DepartmentCard'
 
 const Departments: React.FC = async () => {
     let departments = [];
-    // let error = null;
 
     const data = await getDepartments();
     departments = data.departments || [];
