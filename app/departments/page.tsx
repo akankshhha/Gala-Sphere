@@ -11,7 +11,7 @@ const Departments: React.FC = async () => {
     return (
         <div className="w-10/12 mx-auto">
             {/* <h1>Departments</h1> */}
-            <div >
+            <div className="p-8 text-center">
                 {departments && departments.map((department: any) => {
                     return (
                         <Link key={department.departmentId} href={`/departments/${department.departmentId}`}> 
