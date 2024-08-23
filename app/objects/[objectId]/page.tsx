@@ -1,19 +1,17 @@
-import { getObjectDetails } from '../../api/route'
+import { getObjectDetails } from '../../api/route';
+import ObjectDetailsClient from './ObjectDetailsClient';
+import { fetchAndParseHTML } from '../../utils/fetchHTML';
 
-const ObjectDetails = async ({ params }: {params: { objectId: number}}) => {
-    const { objectId } = params; // Directly access params in server components
-  
-    const objectDetails = await getObjectDetails(objectId);
-  
-    return (
-      <div>
-        <h1>{objectDetails.title}</h1>
-        <p>{objectDetails.artistDisplayName}</p>
-        <img src={objectDetails.primaryImage} alt={objectDetails.title} />
-        <p>{objectDetails.objectDate}</p>
-        {/* Add more details as needed */}
-      </div>
-    );
-  };
-  
-  export default ObjectDetails;
+
+const ObjectDetails = async ({ params }: { params: { objectId: number } }) => {
+  const { objectId } = params; // Directly access params in server components
+  const objectDetails = await getObjectDetails(objectId);
+
+  const url = `https://www.metmuseum.org/art/collection/search/${objectId}`;
+  const selector = '.artwork__intro__desc';
+  const extractedText = await fetchAndParseHTML(url, selector);
+
+  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText}/>;
+};
+
+export default ObjectDetails;

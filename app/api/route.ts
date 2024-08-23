@@ -1,4 +1,7 @@
 const API_BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
+// /app/api/proxy/route.ts
+import { NextResponse } from 'next/server';
+import axios from 'axios';
 
 // Function to get the list of departments
 export async function getDepartments(): Promise<any> {
@@ -52,6 +55,24 @@ export async function getObjectDetails(objectId: number): Promise<any> {
   }
   const data = await response.json();
   return data;
+}
+
+
+
+export async function GET(request: Request) {
+  const url = new URL(request.url).searchParams.get('url'); // Extract URL from query parameters
+
+  if (!url) {
+    return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
+  }
+
+  try {
+    const { data } = await axios.get(url);
+    return NextResponse.json({ data });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+  }
 }
 
 
