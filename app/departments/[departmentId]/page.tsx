@@ -37,7 +37,7 @@ const DepartmentPage = async ({ params, searchParams }: { params: { departmentId
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {objectDetails.map((object: any) => (
                     <Link key={object.objectID} href={`/objects/${object.objectID}`}>
-                        <ObjectCard primaryImage={object.primaryImage} title={object.title} medium={object.medium} artist={object.artistDisplayName} />
+                        <ObjectCard primaryImage={object.primaryImage} title={object.title} medium={object.medium} artist={object.artistDisplayName} objectBeginDate={object.objectBeginDate} objectEndDate={object.objectEndDate}/>
                     </Link>
                 ))}
             </div>

@@ -11,7 +11,9 @@ const ObjectDetails = async ({ params }: { params: { objectId: number } }) => {
   const selector = '.artwork__intro__desc';
   const extractedText = await fetchAndParseHTML(url, selector);
 
-  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText}/>;
+  const imagesForFlickity = [...objectDetails.additionalImages, objectDetails.primaryImage]
+
+  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText} images = {imagesForFlickity}/>;
 };
 
 export default ObjectDetails;
