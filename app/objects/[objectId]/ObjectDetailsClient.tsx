@@ -3,12 +3,8 @@
 import { useState } from 'react';
 import Flickity from 'react-flickity-component'
 import 'flickity/css/flickity.css';
-<script src="https://unpkg.com/flickity-as-nav-for@3/as-nav-for.js"></script>
-import useEmblaCarousel from 'embla-carousel-react'
-import EmblaCarousel from '@/app/components/reusable/Embla Carousel/EmblaCarousel';
 
 const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images }) => {
-    const [emblaRef] = useEmblaCarousel()
 
     const [activeTab, setActiveTab] = useState('Artwork Details');
 
@@ -62,7 +58,6 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
                     <p className="text-gray-500">No Image Available</p>
                 </div>
             )}
-            {/* <EmblaCarousel images={images}/> */}
 
                 </div>
             </div>
