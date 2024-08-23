@@ -40,7 +40,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
 
                 {/* Right Side: Image */}
                 <div className="md:w-2/3 p-10">
-                {/* {images.length > 0 ? (
+                {images.length > 0 ? (
                 <Flickity
                     className={'carousel'} // default ''
                     elementType={'div'} // default 'div'
@@ -61,8 +61,8 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
                 <div className="w-full h-96 bg-gray-200 flex items-center justify-center rounded-lg">
                     <p className="text-gray-500">No Image Available</p>
                 </div>
-            )} */}
-            <EmblaCarousel images={images}/>
+            )}
+            {/* <EmblaCarousel images={images}/> */}
 
                 </div>
             </div>
