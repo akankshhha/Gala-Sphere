@@ -56,7 +56,7 @@ export async function getObjectDetails(objectId: number): Promise<any> {
   return data;
 }
 
-export async function searchInDepartment(q: string, departmentId: number, start: number, end: number) {
+export async function searchInDepartment(q: string, departmentId: number) {
   const response = await fetch(`${API_BASE_URL}/search?q=${q}&departmentId=${departmentId}`, {
     method: 'GET',
     headers: {
@@ -76,6 +76,33 @@ export async function searchInDepartment(q: string, departmentId: number, start:
   }
 
   return searchResult;
+}
+
+// artwork with images only.
+export async function getObjectDetailsWithImages(departmentId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/objects?departmentIds=${departmentId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  console.log(response)
+  if (!response.ok) {
+    throw new Error('Failed to fetch object details');
+  }
+  const data = await response.json();
+console.log(data)
+  let details;
+  if(data !== null) {
+    details = await Promise.all(
+      data?.objectIDs?.map((id: number) => getObjectDetails(id))
+  );
+  const objectsWithImages = details.filter((artwork: any) => artwork.primaryImage && artwork.primaryImage != '')
+  console.log(typeof objectsWithImages)
+  return objectsWithImages
+  }
+  
+  return data;
 }
 
 export async function GET(request: Request) {
