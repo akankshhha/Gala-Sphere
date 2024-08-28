@@ -1,9 +1,8 @@
 const API_BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
-// /app/api/proxy/route.ts
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-// Function to get the list of departments
+
 export async function getDepartments(): Promise<any> {
   try {
     const response = await fetch(`${API_BASE_URL}/departments`, {
@@ -57,7 +56,27 @@ export async function getObjectDetails(objectId: number): Promise<any> {
   return data;
 }
 
+export async function searchInDepartment(q: string, departmentId: number, start: number, end: number) {
+  const response = await fetch(`${API_BASE_URL}/search?q=${q}&departmentId=${departmentId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch object details');
+  }
+  const data = await response.json();
 
+  let searchResult;
+  if(data !== null) {
+     searchResult = await Promise.all(
+      data?.objectIDs?.map((id: number) => getObjectDetails(id))
+  );
+  }
+
+  return searchResult;
+}
 
 export async function GET(request: Request) {
   const url = new URL(request.url).searchParams.get('url'); // Extract URL from query parameters
