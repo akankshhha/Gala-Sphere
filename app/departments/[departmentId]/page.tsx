@@ -1,19 +1,27 @@
-import { getObjectIDs, getObjectDetails, getDepartments } from '../../api/route';
+import { getObjectIDs, getObjectDetails, getDepartments, searchInDepartment } from '../../api/route';
 import DepartmentObjectsClient from '../[departmentId]/DepartmentObjectsClient'
 
 const ITEMS_PER_PAGE = 12;
 
-const DepartmentPage = async ({ params, searchParams }: { params: { departmentId: number }, searchParams: { page?: string } }) => {
+const DepartmentPage = async ({ params, searchParams }: { params: { departmentId: number }, searchParams: { page?: string, q?: string } }) => {
     const { departmentId } = params;
-
-    const page = parseInt(searchParams.page || '1', 10)
+    const query = searchParams.q || '';
+    const page = parseInt(searchParams.page || '1', 10);
     const start = (page - 1) * ITEMS_PER_PAGE; // Page start index
     const end = start + ITEMS_PER_PAGE; // Page end index
 
-    const objectData = await getObjectIDs(departmentId, start, end);
+    let objectData;
+
+    if (query) {
+        // Use searchInDepartment for query-based search
+        objectData = await searchInDepartment(query, departmentId);
+    } else {
+        // Default case, get objects by department
+        objectData = await getObjectIDs(departmentId, start, end);
+    }
 
     const objectDetails = await Promise.all(
-        objectData.objectIDs.map((id: number) => getObjectDetails(id))
+        objectData.objectIDs.slice(start, end).map((id: number) => getObjectDetails(id))
     );
 
     const totalPages = Math.ceil(objectData?.total / ITEMS_PER_PAGE);
@@ -21,9 +29,18 @@ const DepartmentPage = async ({ params, searchParams }: { params: { departmentId
     const { departments } = await getDepartments();
     const department = departments.find((dept: { departmentId: number, displayName: string }) => dept.departmentId === Number(departmentId));
 
-   return(
-        <DepartmentObjectsClient objectDetails = {objectDetails} totalPages = {totalPages} department={department} page = {page} start={start} end={end}/>
-   )
+    return (
+        <DepartmentObjectsClient 
+            objectDetails={objectDetails} 
+            totalPages={totalPages} 
+            department={department} 
+            page={page} 
+            start={start} 
+            end={end} 
+            query={query} // Pass query if present
+        />
+    );
 };
+
 
 export default DepartmentPage;

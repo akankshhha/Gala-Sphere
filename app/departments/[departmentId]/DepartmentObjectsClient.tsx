@@ -1,6 +1,11 @@
+"use client"
+
 import * as React from 'react';
 import ObjectCard from '../../components/static/ObjectCard';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { RefreshCcw } from 'react-feather';
+
 
 export interface IAppProps {
     objectDetails: any,
@@ -8,15 +13,31 @@ export interface IAppProps {
     department: any,
     page: number,
     start: number,
-    end: number
+    end: number,
+    query?: string
 }
 
+
+
+
 export default function App(props: IAppProps) {
+
+    const router = useRouter();
+
+    const handleRefresh = () => {
+        router.push(`/departments/${props.department.departmentId}`); // Replace this URL with the department's base URL
+      };
+
+      const handleSearch = () => {
+        const query = (document.getElementById('searchInput') as HTMLInputElement).value;
+        window.location.href = `?q=${query}`;  // Update URL with search query   
+}
+
     return (
         <div className='w-11/12 mx-auto p-8'>
             {/* Breadcrumb Navigation */}
             <nav className="mb-8">
-                <ul className="flex space-x-4 text-sm font-serif text-gray-700">
+                <ul className="flex space-x-4 text-md font-serif text-gray-700">
                     <li>
                         <Link href="/departments" className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
                             Departments
@@ -32,8 +53,31 @@ export default function App(props: IAppProps) {
             </nav>
             
             <h1 className="text-3xl font-semibold mb-6 text-gray-900 font-serif">
-                Objects in {props.department.displayName}
+                {props.query ? `Search results for "${props.query}" in ${props.department.displayName}` : `Items in ${props.department.displayName}`}
             </h1>
+
+            <div className="flex mb-6">
+                <input 
+                    type="text" 
+                    className="w-full p-3 border border-gray-300 rounded-l-md"
+                    placeholder="Search objects..." 
+                    defaultValue={props.query || ''}
+                    id="searchInput"
+                />
+                <button 
+                    className="bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] text-gray-800 px-5 py-3 font-semibold border border-gray-300"
+                    onClick={handleSearch}
+                >
+                    Search
+                </button>
+                <button 
+                    className="bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] text-gray-800 px-5 py-3 rounded-r-md font-semibold border border-gray-300"
+                    onClick={handleRefresh}
+                >
+                    <RefreshCcw />
+                </button>
+                
+            </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {props.objectDetails.map((object: any) => (

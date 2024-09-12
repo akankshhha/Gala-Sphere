@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Header: React.FC = () => {
   return (
-    <header className="top-0 bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] py-4 px-4 sm:px-6 md:px-8 z-50">
+    <header className="top-0 bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] py-6 px-4 sm:px-6 md:px-8 z-50">
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
         <h1 className="text-2xl sm:text-3xl font-semibold mb-4">
           <Link href="/" className="text-gray-800 hover:text-gray-600">The Metropolitan Museum of Art</Link>

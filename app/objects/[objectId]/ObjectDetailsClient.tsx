@@ -3,19 +3,18 @@
 import { useEffect, useRef, useState } from 'react';
 import Flickity from 'react-flickity-component';
 import 'flickity/css/flickity.css';
+import Link from 'next/link';
 
 
-const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images }) => {
+const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, description, images }) => {
     const [activeTab, setActiveTab] = useState('Artwork Details');
     const [isExpanded, setIsExpanded] = useState(false);
     const [showReadMore, setShowReadMore] = useState(false);
     
-    // Function to handle the "Read more" toggle
     const handleReadMoreToggle = () => {
         setIsExpanded(!isExpanded);
     };
 
-    // Function to check if the text is overflowing
     const checkOverflow = (e: React.RefObject<HTMLDivElement>) => {
         if (e.current) {
             setShowReadMore(e.current.scrollHeight > e.current.clientHeight);
@@ -28,7 +27,6 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
         checkOverflow(textRef);
     }, [description]);
 
-
     const flickityOptions = {
         wrapAround: true,
         contain: true,
@@ -40,35 +38,60 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
 
     return (
         <div className="mx-auto p-8 rounded-lg mt-8 w-11/12 font-serif">
+            {/* Breadcrumb */}
+            <nav className="mb-8">
+                <ul className="flex space-x-4 text-md font-serif text-gray-700">
+                    <li>
+                        <Link href="/departments" className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
+                            Departments
+                        </Link>
+                    </li>
+                    <li>
+                        <span className="text-gray-400">/</span>
+                    </li>
+                    <li>
+                        <Link href={`/departments/${departmentId}`} className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
+                            {objectDetails.department || 'Unknown Department'}
+                        </Link>
+                    </li>
+                    <li>
+                        <span className="text-gray-400">/</span>
+                    </li>
+                    <li className="text-gray-600 capitalize">
+                        {objectDetails.objectName || 'Unknown Object'}
+                    </li>
+                </ul>
+            </nav>
+
             {/* Top Section: Description and Image */}
             <div className="flex flex-col md:flex-row gap-8 mb-8">
                 {/* Left Side: Description */}
                 <div className={`md:w-1/3 p-10 ${!description ? 'flex items-center justify-center' : ''}`}>
-            <div className={`${!description ? 'text-center' : ''}`}>
-                <h1 className="text-3xl font-bold mb-4 text-gray-800">{objectDetails.title}</h1>
-                <p className="text-lg text-gray-600 mb-4 italic  text-[#C71585] font-semibold">
-                    {objectDetails.artistDisplayName || 'Unknown Artist'}
-                </p>
-                {description && (
-                    <div className="text-gray-700 leading-relaxed">
-                        <div 
-                            className={`transition-max-height duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-52'}`}
-                            ref={textRef}
-                        >
-                            <p>{description}</p>
-                        </div>
-                        {showReadMore && (
-                            <button 
-                                onClick={handleReadMoreToggle}
-                                className="text-blue-600 hover:underline mt-2 text-[#C71585] font-semibold"
-                            >
-                                {isExpanded ? 'Read less' : 'Read more...'}
-                            </button>
+                    <div className={`${!description ? 'text-center' : ''}`}>
+                        <h1 className="text-3xl font-bold mb-4 text-gray-800">{objectDetails.title}</h1>
+                        <p className="text-lg text-gray-600 mb-4 italic text-[#C71585] font-semibold">
+                            {objectDetails.artistDisplayName || 'Unknown Artist'}
+                        </p>
+                        {description && (
+                            <div className="text-gray-700 leading-relaxed">
+                                <div 
+                                    className={`transition-max-height duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-52'}`}
+                                    ref={textRef}
+                                >
+                                    <p>{description}</p>
+                                </div>
+                                {showReadMore && (
+                                    <button 
+                                        onClick={handleReadMoreToggle}
+                                        className="text-blue-600 hover:underline mt-2 text-[#C71585] font-semibold"
+                                    >
+                                        {isExpanded ? 'Read less' : 'Read more...'}
+                                    </button>
+                                )}
+                            </div>
                         )}
                     </div>
-                )}
-            </div>
-        </div>
+                </div>
 
                 {/* Right Side: Image */}
                 <div className="md:w-2/3 p-10">
@@ -105,19 +128,19 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, description, images
                 <div className="md:w-1/4 border-r border-gray-200">
                     <ul className="flex md:flex-col">
                         <li
-                            className={`p-4 cursor-pointer ${activeTab === 'Artwork Details' ? 'bg-gray-200 font-bold  text-[#C71585]' : ''}`}
+                            className={`p-4 cursor-pointer ${activeTab === 'Artwork Details' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
                             onClick={() => setActiveTab('Artwork Details')}
                         >
                             Artwork Details
                         </li>
                         <li
-                            className={`p-4 cursor-pointer ${activeTab === 'Constituents' ? 'bg-gray-200 font-bold  text-[#C71585]' : ''}`}
+                            className={`p-4 cursor-pointer ${activeTab === 'Constituents' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
                             onClick={() => setActiveTab('Constituents')}
                         >
                             Constituents
                         </li>
                         <li
-                            className={`p-4 cursor-pointer ${activeTab === 'Artist Description' ? 'bg-gray-200 font-bold  text-[#C71585]' : ''}`}
+                            className={`p-4 cursor-pointer ${activeTab === 'Artist Description' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
                             onClick={() => setActiveTab('Artist Description')}
                         >
                             Artist Description
