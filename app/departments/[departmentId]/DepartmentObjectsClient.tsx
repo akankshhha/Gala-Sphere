@@ -17,9 +17,6 @@ export interface IAppProps {
     query?: string
 }
 
-
-
-
 export default function App(props: IAppProps) {
 
     const router = useRouter();
@@ -53,14 +50,26 @@ export default function App(props: IAppProps) {
             </nav>
             
             <h1 className="text-3xl font-semibold mb-6 text-gray-900 font-serif">
-                {props.query ? `Search results for "${props.query}" in ${props.department.displayName}` : `Items in ${props.department.displayName}`}
+            <div>
+  {props.query ? (
+    <p>
+      Search results for "<span className="text-gray-600">{props.query}</span>" in{' '}
+      <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
+    </p>
+  ) : (
+    <p>
+      Items in{' '}
+      <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
+    </p>
+  )}
+</div>
             </h1>
 
             <div className="flex mb-6">
                 <input 
                     type="text" 
                     className="w-full p-3 border border-gray-300 rounded-l-md"
-                    placeholder="Search objects..." 
+                    placeholder="Search artwork..." 
                     defaultValue={props.query || ''}
                     id="searchInput"
                 />
