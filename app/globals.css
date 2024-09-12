@@ -6,9 +6,5 @@
     transition: height 0.2s;
   }
 
-  .carousel.is-fullscreen .carousel-cell {
-    height: 100vh;
-    margin-top: 15rem
-  }
 
   

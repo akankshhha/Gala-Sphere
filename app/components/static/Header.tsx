@@ -4,16 +4,16 @@ import Link from 'next/link';
 
 const Header: React.FC = () => {
   return (
-    <header className="top-0 bg-gradient-to-r from-[#f9ccdf] to-[#ddebed] py-4 px-4 sm:px-6 md:px-8 z-50">
+    <header className="top-0 bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] py-4 px-4 sm:px-6 md:px-8 z-50">
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">
-          <Link href="/">The Metropolitan Museum of Art</Link>
+        <h1 className="text-2xl sm:text-3xl font-semibold mb-4">
+          <Link href="/" className="text-gray-800 hover:text-gray-600">The Metropolitan Museum of Art</Link>
         </h1>
-        <nav className="flex space-x-4">
-          <Link href="/" className="hover:underline">Overview</Link>
-          <Link href="/about" className="hover:underline">About</Link>
-          <Link href="/departments" className="hover:underline">Departments</Link>
-          {/* <Link href="/gallery" className="hover:underline">Gallery</Link> */}
+        <nav className="flex space-x-6">
+          <Link href="/" className="text-gray-800 hover:text-[#C71585] hover:underline transition-all duration-100 hover:font-semibold">Overview</Link>
+          <Link href="/about" className="text-gray-800 hover:text-[#C71585] hover:underline transition-all duration-100 hover:font-semibold">About</Link>
+          <Link href="/departments" className="text-gray-800 hover:text-[#C71585] hover:underline transition-all duration-100 hover:font-semibold">Departments</Link>
+          {/* <Link href="/gallery" className="text-gray-800 hover:text-gray-600 hover:underline transition-all duration-300">Gallery</Link> */}
         </nav>
       </div>
     </header>
