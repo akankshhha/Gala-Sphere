@@ -56,54 +56,48 @@ export async function getObjectDetails(objectId: number): Promise<any> {
   return data;
 }
 
-export async function searchInDepartment(q: string, departmentId: number) {
-  const response = await fetch(`${API_BASE_URL}/search?q=${q}&departmentId=${departmentId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  if (!response.ok) {
-    throw new Error('Failed to fetch object details');
-  }
-  const data = await response.json();
+export async function getDepartmentIDByName(departmentName: string): Promise<number | null> {
+  try {
+    // Fetch all departments
+    const departmentsData = await getDepartments();
 
-  let searchResult;
-  if(data !== null) {
-     searchResult = await Promise.all(
-      data?.objectIDs?.map((id: number) => getObjectDetails(id))
-  );
-  }
+    const department = departmentsData.departments.find(
+      (dept: { departmentId: number; displayName: string }) => dept.displayName.toLowerCase() === departmentName.toLowerCase()
+    );
 
-  return searchResult;
+    return department ? department.departmentId : null;
+  } catch (error) {
+    console.error('Failed to fetch department ID:', error);
+    throw error;
+  }
 }
 
-// artwork with images only.
-export async function getObjectDetailsWithImages(departmentId: number): Promise<any> {
-  const response = await fetch(`${API_BASE_URL}/objects?departmentIds=${departmentId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  console.log(response)
-  if (!response.ok) {
-    throw new Error('Failed to fetch object details');
+
+export async function searchInDepartment(query: string, departmentId: number) {
+  try {
+      const response = await fetch(
+          `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${departmentId}&q=${query}`
+      );
+      const data = await response.json();
+
+      if (data.total === 0) {
+          return {
+              objectIDs: [],  
+              total: 0
+          };
+      }
+
+      return {
+          objectIDs: data.objectIDs,  
+          total: data.total            
+      };
+  } catch (error) {
+      console.error('Error fetching search results:', error);
+      return { objectIDs: [], total: 0 };
   }
-  const data = await response.json();
-console.log(data)
-  let details;
-  if(data !== null) {
-    details = await Promise.all(
-      data?.objectIDs?.map((id: number) => getObjectDetails(id))
-  );
-  const objectsWithImages = details.filter((artwork: any) => artwork.primaryImage && artwork.primaryImage != '')
-  console.log(typeof objectsWithImages)
-  return objectsWithImages
-  }
-  
-  return data;
 }
+
+
 
 export async function GET(request: Request) {
   const url = new URL(request.url).searchParams.get('url'); // Extract URL from query parameters

@@ -7,7 +7,6 @@ const Departments: React.FC = async () => {
 
     const data = await getDepartments();
     departments = data.departments || [];
-
     return (
         <div className="w-10/12 mx-auto">
             {/* <h1>Departments</h1> */}

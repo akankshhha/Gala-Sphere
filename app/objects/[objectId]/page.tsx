@@ -1,4 +1,4 @@
-import { getObjectDetails } from '../../api/route';
+import { getDepartmentIDByName, getObjectDetails } from '../../api/route';
 import ObjectDetailsClient from './ObjectDetailsClient';
 import { fetchAndParseHTML } from '../../utils/fetchHTML';
 
@@ -13,7 +13,9 @@ const ObjectDetails = async ({ params }: { params: { objectId: number } }) => {
 
   const imagesForFlickity = [...objectDetails.additionalImages, objectDetails.primaryImage]
 
-  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText} images = {imagesForFlickity}/>;
+  const departmentId = await getDepartmentIDByName(objectDetails.department);
+
+  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText} images = {imagesForFlickity} departmentId = {departmentId}/>;
 };
 
 export default ObjectDetails;
