@@ -6,7 +6,7 @@ import 'flickity/css/flickity.css';
 import Link from 'next/link';
 
 
-const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, description, images }) => {
+const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extractedText, images }) => {
     const [activeTab, setActiveTab] = useState('Artwork Details');
     const [isExpanded, setIsExpanded] = useState(false);
     const [showReadMore, setShowReadMore] = useState(false);
@@ -25,7 +25,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, descr
 
     useEffect(() => {
         checkOverflow(textRef);
-    }, [description]);
+    }, [extractedText.description]);
 
     const flickityOptions = {
         wrapAround: true,
@@ -66,24 +66,24 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, descr
             {/* Top Section: Description and Image */}
             <div className="flex flex-col md:flex-row gap-8 mb-8">
                 {/* Left Side: Description */}
-                <div className={`md:w-1/3 p-10 ${!description ? 'flex items-center justify-center' : ''}`}>
-                    <div className={`${!description ? 'text-center' : ''}`}>
+                <div className={`md:w-1/3 p-10 ${!extractedText.description ? 'flex items-center justify-center' : ''}`}>
+                    <div className={`${!extractedText.description ? 'text-center' : ''}`}>
                         <h1 className="text-3xl font-bold mb-4 text-gray-800">{objectDetails.title}</h1>
-                        <p className="text-lg text-gray-600 mb-4 italic text-[#C71585] font-semibold">
+                        <p className="text-lg mb-4 italic text-[#C71585] font-semibold">
                             {objectDetails.artistDisplayName || 'Unknown Artist'}
                         </p>
-                        {description && (
+                        {extractedText.description && (
                             <div className="text-gray-700 leading-relaxed">
                                 <div 
                                     className={`transition-max-height duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-screen' : 'max-h-52'}`}
                                     ref={textRef}
                                 >
-                                    <p>{description}</p>
+                                    <p>{extractedText.description}</p>
                                 </div>
                                 {showReadMore && (
                                     <button 
                                         onClick={handleReadMoreToggle}
-                                        className="text-blue-600 hover:underline mt-2 text-[#C71585] font-semibold"
+                                        className="hover:underline mt-2 text-[#C71585] font-semibold"
                                     >
                                         {isExpanded ? 'Read less' : 'Read more...'}
                                     </button>
@@ -151,6 +151,12 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, descr
                         >
                             Time Period
                         </li>
+                        <li
+                            className={`p-4 cursor-pointer ${activeTab === 'Notes' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
+                            onClick={() => setActiveTab('Notes')}
+                        >
+                            Catalogue Entry
+                        </li>
                     </ul>
                 </div>
 
@@ -189,6 +195,11 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, descr
                             <p><strong>Dynasty:</strong> {objectDetails.dynasty || 'N/A'}</p>
                             <p><strong>Reign:</strong> {objectDetails.reign || 'N/A'}</p>
                             <p><strong>Object Date:</strong> {objectDetails.objectDate || 'N/A'}</p>
+                        </div>
+                    )}
+                    {activeTab === 'Notes' && (
+                        <div className="flex flex-col gap-4" >
+                            {extractedText.notes}
                         </div>
                     )}
                 </div>

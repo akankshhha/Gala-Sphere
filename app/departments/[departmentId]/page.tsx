@@ -37,7 +37,8 @@ const DepartmentPage = async ({ params, searchParams }: { params: { departmentId
             page={page} 
             start={start} 
             end={end} 
-            query={query} // Pass query if present
+            query={query}
+            totalItems = {objectData?.total} // Pass query if present
         />
     );
 };

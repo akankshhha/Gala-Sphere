@@ -14,7 +14,8 @@ export interface IAppProps {
     page: number,
     start: number,
     end: number,
-    query?: string
+    query?: string,
+    totalItems: number
 }
 
 export default function App(props: IAppProps) {
@@ -86,6 +87,10 @@ export default function App(props: IAppProps) {
                     <RefreshCcw />
                 </button>
 
+            </div>
+
+            <div className="text-gray-700 font-semibold mb-4 text-xl font-serif">
+                Showing <span className='text-[#C71585] font-bold'>{props.totalItems}</span>  items
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

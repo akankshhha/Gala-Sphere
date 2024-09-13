@@ -49,17 +49,23 @@ const TabsSection: React.FC = () => {
       <div>
         {activeTab === 'tab1' && (
           <div className="p-6 bg-white shadow-lg rounded-lg mb-6">
-            <p>The Metropolitan Museum of Art (The Met) is a prestigious art museum based in New York City, celebrated for its extensive and diverse art collections.</p>
+            <p>The Metropolitan Museum of Art (The Met) is a prestigious art museum based in New York City, celebrated for its extensive and diverse art collections. The Metropolitan Museum of Art presents over 5,000 years of art from around the world for everyone to experience and enjoy.
+              <br />  <br />
+
+              Since it was founded in 1870, The Met has always aspired to be more than a treasury of rare and beautiful objects. Every day, art comes alive in the Museum’s galleries and through its exhibitions and events, revealing both new ideas and unexpected connections across time and across cultures.
+            </p>
           </div>
         )}
         {activeTab === 'tab2' && (
           <div className="p-6 bg-white shadow-lg rounded-lg mb-6">
-            <p>Houses a vast and diverse collection of art from various cultures and historical periods.</p>
+            <p>Houses a vast and diverse collection of art from various cultures and historical periods. The Metropolitan Museum of Art provides select datasets of information on more than 470,000 artworks in its Collection for unrestricted commercial and noncommercial use. </p>
           </div>
         )}
         {activeTab === 'tab3' && (
           <div className="p-6 bg-white shadow-lg rounded-lg mb-6">
-            <p>To preserve, display, and educate the public about art and its history.</p>
+            <p>To preserve, display, and educate the public about art and its history.  It serves as an educational institution where visitors can engage with a diverse range of artwork, from ancient civilizations to contemporary pieces, promoting cultural understanding and inspiration. The museum also conducts research, supports scholarship, and offers programs that contribute to the global art community.
+
+            </p>
           </div>
         )}
         {activeTab === 'tab4' && (

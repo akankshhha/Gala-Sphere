@@ -8,14 +8,19 @@ const ObjectDetails = async ({ params }: { params: { objectId: number } }) => {
   const objectDetails = await getObjectDetails(objectId);
 
   const url = `https://www.metmuseum.org/art/collection/search/${objectId}`;
-  const selector = '.artwork__intro__desc';
-  const extractedText = await fetchAndParseHTML(url, selector);
+  const extractedTextDesc = await fetchAndParseHTML(url, '.artwork__intro__desc');
+  const extractedTextNotes = await fetchAndParseHTML(url, '#notes', '.show-more__body');
+
+  const extractedText = {
+    description: extractedTextDesc,
+    notes: extractedTextNotes
+  }
 
   const imagesForFlickity = [...objectDetails.additionalImages, objectDetails.primaryImage]
 
   const departmentId = await getDepartmentIDByName(objectDetails.department);
 
-  return <ObjectDetailsClient objectDetails={objectDetails} description = {extractedText} images = {imagesForFlickity} departmentId = {departmentId}/>;
+  return <ObjectDetailsClient objectDetails={objectDetails} extractedText = {extractedText} images = {imagesForFlickity} departmentId = {departmentId}/>;
 };
 
 export default ObjectDetails;

@@ -1,35 +1,10 @@
-
-// const About: React.FC = () => {
-//     return (
-//         <div className="w-9/12 mx-auto py-12">
-//             <p>
-
-//                 The Metropolitan Museum of Art, widely known as The Met, is one of the world's largest and most prestigious art museums. It presents an unparalleled collection of over 5,000 years of art from around the globe, offering visitors an opportunity to experience and appreciate a diverse array of artistic traditions. The Met operates two iconic locations in New York City: The Met Fifth Avenue and The Met Cloisters. Each site offers a unique experience, with The Met Fifth Avenue housing a vast collection spanning various periods and cultures, while The Met Cloisters is dedicated to the art and architecture of medieval Europe, set amidst tranquil gardens and medieval-style architecture.
-//                 <br /><br />
-
-//                 Since its founding in 1870, The Met has been more than just a repository of art. It is a dynamic cultural institution that strives to engage the public through its exhibitions, educational programs, and events. The museum's mission is to foster a deeper understanding of art and its impact on human history and culture. The Met's collection includes masterpieces from ancient civilizations, European paintings from the Renaissance to the present, and an extensive array of American, Asian, African, and Islamic art.
-//                 <br /><br />
-
-//                 The Met's dedication to making art accessible extends beyond its physical locations. Millions of people worldwide engage with The Met's collection and educational resources online, thanks to its extensive digital initiatives. These include virtual exhibitions, online collections, and educational videos that bring the museum's resources to audiences who may not have the opportunity to visit in person.
-//                 <br /><br />
-
-//                 Every day, The Met's galleries come alive with the stories told through art, bridging the gap between the past and present and connecting cultures and ideas from across the globe. Through its exhibitions and programs, The Met continues to reveal new insights and forge unexpected connections, enriching the public's understanding and appreciation of the world's artistic heritage.
-//             </p>
-//         </div>
-//     )
-// }
-
-
-
-// export default About
-
-
-
-"use client";
+'use client';
 
 import { useState } from 'react';
+
 const About: React.FC = () => {
   const [activeSection, setActiveSection] = useState('section1');
+  const [isCollapsed, setIsCollapsed] = useState(false); // Manage collapse state
 
   const renderContent = () => {
     switch (activeSection) {
@@ -46,7 +21,33 @@ const About: React.FC = () => {
 
   return (
     <div className="flex">
-      {/* <Sidebar onSelect={setActiveSection} /> */}
+      {/* Sidebar */}
+      <aside className={`transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'} bg-gray-200 text-gray-800 h-screen`}>
+        <button 
+          onClick={() => setIsCollapsed(!isCollapsed)} 
+          className="p-2 bg-gray-300 w-full text-center focus:outline-none font-semibold"
+        >
+          {isCollapsed ? '>' : '< Collapse'} {/* Toggle collapse icon */}
+        </button>
+        <nav className={`mt-4 ${isCollapsed ? 'hidden' : 'block'}`}>
+          <ul>
+            <li className={`p-4 cursor-pointer ${activeSection === 'section1' ? 'bg-gray-300 text-[#C71585] font-semibold' : 'bg-gray-200 hover:bg-gray-300'}`}
+              onClick={() => setActiveSection('section1')}>
+              Museum History
+            </li>
+            <li className={`p-4 cursor-pointer ${activeSection === 'section2' ? 'bg-gray-300 text-[#C71585] font-semibold' : 'bg-gray-200 hover:bg-gray-300'}`}
+              onClick={() => setActiveSection('section2')}>
+              Exhibitions & Programs
+            </li>
+            <li className={`p-4 cursor-pointer ${activeSection === 'section3' ? 'bg-gray-300 text-[#C71585] font-semibold' : 'bg-gray-200 hover:bg-gray-300'}`}
+              onClick={() => setActiveSection('section3')}>
+              Collection & Archives
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main content */}
       <main className="flex-1 p-6 bg-gray-100">
         {renderContent()}
       </main>
