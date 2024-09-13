@@ -62,8 +62,8 @@ export async function getDepartmentIDByName(departmentName: string): Promise<num
     const departmentsData = await getDepartments();
 
     const department = departmentsData.departments.find(
-      (dept: { departmentId: number; displayName: string }) => dept.displayName.toLowerCase() === departmentName.toLowerCase()
-    );
+      (dept: { departmentId: number; displayName: string }) => dept.displayName.toLowerCase().includes(departmentName.toLowerCase()
+    ));
 
     return department ? department.departmentId : null;
   } catch (error) {

@@ -23,12 +23,12 @@ export default function App(props: IAppProps) {
 
     const handleRefresh = () => {
         router.push(`/departments/${props.department.departmentId}`); // Replace this URL with the department's base URL
-      };
+    };
 
-      const handleSearch = () => {
+    const handleSearch = () => {
         const query = (document.getElementById('searchInput') as HTMLInputElement).value;
         window.location.href = `?q=${query}`;  // Update URL with search query   
-}
+    }
 
     return (
         <div className='w-11/12 mx-auto p-8'>
@@ -48,81 +48,81 @@ export default function App(props: IAppProps) {
                     </li>
                 </ul>
             </nav>
-            
+
             <h1 className="text-3xl font-semibold mb-6 text-gray-900 font-serif">
-            <div>
-  {props.query ? (
-    <p>
-      Search results for "<span className="text-gray-600">{props.query}</span>" in{' '}
-      <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
-    </p>
-  ) : (
-    <p>
-      Items in{' '}
-      <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
-    </p>
-  )}
-</div>
+                <div>
+                    {props.query ? (
+                        <p>
+                            Search results for "<span className="text-gray-600">{props.query}</span>" in{' '}
+                            <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
+                        </p>
+                    ) : (
+                        <p>
+                            Items in{' '}
+                            <span className="text-[#C71585] font-semibold">{props.department.displayName}</span>
+                        </p>
+                    )}
+                </div>
             </h1>
 
             <div className="flex mb-6">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     className="w-full p-3 border border-gray-300 rounded-l-md"
-                    placeholder="Search artwork..." 
+                    placeholder="Search artwork..."
                     defaultValue={props.query || ''}
                     id="searchInput"
                 />
-                <button 
+                <button
                     className="bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] text-gray-800 px-5 py-3 font-semibold border border-gray-300"
                     onClick={handleSearch}
                 >
                     Search
                 </button>
-                <button 
+                <button
                     className="bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] text-gray-800 px-5 py-3 rounded-r-md font-semibold border border-gray-300"
                     onClick={handleRefresh}
                 >
                     <RefreshCcw />
                 </button>
-                
+
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {props.objectDetails.map((object: any) => (
                     <Link key={object.objectID} href={`/objects/${object.objectID}`} passHref>
-                        <ObjectCard 
-                            primaryImage={object.primaryImage} 
-                            title={object.title} 
-                            medium={object.medium} 
-                            artist={object.artistDisplayName} 
-                            objectBeginDate={object.objectBeginDate} 
+                        <ObjectCard
+                            primaryImage={object.primaryImage}
+                            title={object.title}
+                            medium={object.medium}
+                            artist={object.artistDisplayName}
+                            objectBeginDate={object.objectBeginDate}
                             objectEndDate={object.objectEndDate}
                         />
                     </Link>
                 ))}
             </div>
-            
+
             <div className="flex justify-between items-center mt-8">
                 {/* Previous Button */}
                 <Link href={`?page=${props.page - 1}`} passHref>
-                    <button 
-                        disabled={props.page <= 1} 
+                    <button
+                        disabled={props.page <= 1}
                         className={`bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] font-bold text-gray-700 p-3 rounded-md shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${props.page <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gradient-to-l from-[#e6e6e6] to-[#f0f0f0]'}`}
                     >
                         &larr; Previous
                     </button>
                 </Link>
-                
+
                 {/* Page Info */}
                 <span className="text-gray-700 font-serif text-lg font-medium">
                     Page {props.page} of {props.totalPages}
                 </span>
-                
+
                 {/* Next Button */}
                 <Link href={`?page=${props.page + 1}`} passHref>
-                    <button 
-                        disabled={props.page >= props.totalPages} 
+                    <button
+                        disabled={props.page >= props.totalPages}
                         className={`bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] font-bold text-gray-700 p-3 rounded-md shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${props.page >= props.totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gradient-to-r from-[#e6e6e6] to-[#f0f0f0]'}`}
                     >
                         Next &rarr;
