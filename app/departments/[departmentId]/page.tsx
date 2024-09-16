@@ -14,14 +14,14 @@ const DepartmentPage = async ({ params, searchParams }: { params: { departmentId
 
     if (query) {
         // Use searchInDepartment for query-based search
-        objectData = await searchInDepartment(query, departmentId);
+        objectData = await searchInDepartment(query, departmentId, start, end);
     } else {
         // Default case, get objects by department
         objectData = await getObjectIDs(departmentId, start, end);
     }
 
     const objectDetails = await Promise.all(
-        objectData.objectIDs.slice(start, end).map((id: number) => getObjectDetails(id))
+        objectData.objectIDs.map((id: number) => getObjectDetails(id))
     );
 
     const totalPages = Math.ceil(objectData?.total / ITEMS_PER_PAGE);

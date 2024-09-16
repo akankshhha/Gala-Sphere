@@ -5,6 +5,10 @@ import ObjectCard from '../../components/static/ObjectCard';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { RefreshCcw } from 'react-feather';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
 
 
 export interface IAppProps {
@@ -35,7 +39,7 @@ export default function App(props: IAppProps) {
         <div className='w-11/12 mx-auto p-8'>
             {/* Breadcrumb Navigation */}
             <nav className="mb-8">
-                <ul className="flex space-x-4 text-md font-serif text-gray-700">
+                <ul className="flex space-x-4 text-md font-serif text-gray-700" data-aos = "fade-in" data-aos-duration = "1500">
                     <li>
                         <Link href="/departments" className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
                             Departments
@@ -89,7 +93,7 @@ export default function App(props: IAppProps) {
 
             </div>
 
-            <div className="text-gray-700 font-semibold mb-4 text-xl font-serif">
+            <div className="text-gray-700 font-semibold mb-4 text-xl font-serif" data-aos = "2000">
                 Showing <span className='text-[#C71585] font-bold'>{props.totalItems}</span>  items
             </div>
 
@@ -121,7 +125,7 @@ export default function App(props: IAppProps) {
 
                 {/* Page Info */}
                 <span className="text-gray-700 font-serif text-lg font-medium">
-                    Page {props.page} of {props.totalPages}
+                    Page<span className='text-[#C71585] font-semibold'>{props.page}</span>  of <span className='text-[#C71585] font-semibold'>{props.totalPages}</span> 
                 </span>
 
                 {/* Next Button */}

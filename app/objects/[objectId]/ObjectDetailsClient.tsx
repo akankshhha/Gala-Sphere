@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import Flickity from 'react-flickity-component';
 import 'flickity/css/flickity.css';
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
 
 
 const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extractedText, images }) => {
@@ -40,7 +45,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
         <div className="mx-auto p-8 rounded-lg mt-8 w-11/12 font-serif">
             {/* Breadcrumb */}
             <nav className="mb-8">
-                <ul className="flex space-x-4 text-md font-serif text-gray-700">
+                <ul className="flex space-x-4 text-md font-serif text-gray-700" data-aos="fade-in"  data-aos-duration="1500">
                     <li>
                         <Link href="/departments" className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
                             Departments
@@ -72,6 +77,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                         <p className="text-lg mb-4 italic text-[#C71585] font-semibold">
                             {objectDetails.artistDisplayName || 'Unknown Artist'}
                         </p>
+                        <p data-aos = "fade-in" data-aos-duration = "1000">
                         {extractedText.description && (
                             <div className="text-gray-700 leading-relaxed">
                                 <div 
@@ -90,6 +96,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                                 )}
                             </div>
                         )}
+                        </p>
                     </div>
                 </div>
 
@@ -155,7 +162,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                             className={`p-4 cursor-pointer ${activeTab === 'Notes' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
                             onClick={() => setActiveTab('Notes')}
                         >
-                            Catalogue Entry
+                            Notes
                         </li>
                     </ul>
                 </div>
@@ -163,7 +170,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                 {/* Tabs Content */}
                 <div className="md:w-3/4 p-2">
                     {activeTab === 'Artwork Details' && (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4" data-aos = "fade-left" data-aos-duration = "500">
                             <p><strong>Type of the Art piece:</strong> {objectDetails.objectName || 'N/A'}</p>
                             <p><strong>Medium:</strong> {objectDetails.medium || 'N/A'}</p>
                             <p><strong>Dimensions:</strong> {objectDetails.dimensions || 'N/A'}</p>
@@ -172,7 +179,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                         </div>
                     )}
                     {activeTab === 'Constituents' && (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
                             <p><strong>Role:</strong> {objectDetails.constituents?.role || 'N/A'}</p>
                             <p><strong>Artist:</strong> {objectDetails.constituents?.artist || 'N/A'}</p>
                             <p><strong>Gender:</strong> {objectDetails.constituents?.gender || 'N/A'}</p>
@@ -180,7 +187,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                         </div>
                     )}
                     {activeTab === 'Artist Description' && (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
                             <p><strong>Name:</strong> {objectDetails.artistDisplayName || 'N/A'}</p>
                             <p><strong>Role:</strong> {objectDetails.artistRole || 'N/A'}</p>
                             <p><strong>Nationality:</strong> {objectDetails.artistNationality || 'N/A'}</p>
@@ -189,7 +196,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                         </div>
                     )}
                     {activeTab === 'Time Period' && (
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
                             <p><strong>Culture:</strong> {objectDetails.culture || 'N/A'}</p>
                             <p><strong>Period:</strong> {objectDetails.period || 'N/A'}</p>
                             <p><strong>Dynasty:</strong> {objectDetails.dynasty || 'N/A'}</p>

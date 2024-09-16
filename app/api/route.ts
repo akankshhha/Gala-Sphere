@@ -73,7 +73,7 @@ export async function getDepartmentIDByName(departmentName: string): Promise<num
 }
 
 
-export async function searchInDepartment(query: string, departmentId: number) {
+export async function searchInDepartment(query: string, departmentId: number, start: number, end: number) {
   try {
       const response = await fetch(
           `https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=${departmentId}&q=${query}`
@@ -88,7 +88,7 @@ export async function searchInDepartment(query: string, departmentId: number) {
       }
 
       return {
-          objectIDs: data.objectIDs,  
+          objectIDs:  data.objectIDs.slice(start, end) || [],  
           total: data.total            
       };
   } catch (error) {

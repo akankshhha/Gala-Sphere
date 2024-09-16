@@ -24,7 +24,7 @@ export async function fetchAndParseHTML(url: string, selector: string, innerSele
     }
 
     // Return the extracted content, or a fallback message if none is found
-    return extractedContent || 'Content not found';
+    return extractedContent || 'Content unavailable';
   } catch (error) {
     console.error('Error fetching or parsing data:', error);
     return '';
