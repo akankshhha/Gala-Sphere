@@ -13,7 +13,7 @@ export async function getDepartments(): Promise<any> {
     });
 
     if (!response.ok) {
-      throw new Error(`Error fetching departments: ${response.statusText}`);
+      throw new Error(`Error fetching departments.`);
     }
 
     const data = await response.json();
