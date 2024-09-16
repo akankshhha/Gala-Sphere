@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 
-export async function getDepartments(): Promise<any> {
+export async function getDepartments() {
   try {
     const response = await fetch(`${API_BASE_URL}/departments`, {
       method: 'GET',
@@ -42,7 +42,7 @@ export async function getObjectIDs(departmentId: number, start: number, end:numb
   };}
 
 // Function to get the object details based on objectId
-export async function getObjectDetails(objectId: number) {
+export async function getObjectDetails(objectId: number): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/objects/${objectId}`, {
     method: 'GET',
     headers: {
