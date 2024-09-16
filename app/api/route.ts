@@ -42,7 +42,7 @@ export async function getObjectIDs(departmentId: number, start: number, end:numb
   };}
 
 // Function to get the object details based on objectId
-export async function getObjectDetails(objectId: number): Promise<any> {
+export async function getObjectDetails(objectId: number) {
   const response = await fetch(`${API_BASE_URL}/objects/${objectId}`, {
     method: 'GET',
     headers: {
