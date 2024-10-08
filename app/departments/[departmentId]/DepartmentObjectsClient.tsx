@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { RefreshCcw } from 'react-feather';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Suspense } from 'react';
+import SkeletonLoader from '@/app/components/reusable/SkeletonLoader';
 
 AOS.init();
 
@@ -25,21 +27,23 @@ export interface IAppProps {
 export default function App(props: IAppProps) {
 
     const router = useRouter();
+    const [query, setQuery] = React.useState('');
+
 
     const handleRefresh = () => {
-        router.push(`/departments/${props.department.departmentId}`); // Replace this URL with the department's base URL
+        router.push(`/departments/${props.department.departmentId}`);
     };
 
     const handleSearch = () => {
-        const query = (document.getElementById('searchInput') as HTMLInputElement).value;
-        window.location.href = `?q=${query}`;  // Update URL with search query   
+        router.push(`?q=${query}`);
+
     }
 
     return (
         <div className='w-11/12 mx-auto p-8'>
             {/* Breadcrumb Navigation */}
             <nav className="mb-8">
-                <ul className="flex space-x-4 text-md font-serif text-gray-700" data-aos = "fade-in" data-aos-duration = "1500">
+                <ul className="flex space-x-4 text-md font-serif text-gray-700" data-aos="fade-in" data-aos-duration="1500">
                     <li>
                         <Link href="/departments" className="text-gray-900 hover:text-gray-700 hover:underline transition-colors duration-300">
                             Departments
@@ -76,6 +80,8 @@ export default function App(props: IAppProps) {
                     className="w-full p-3 border border-gray-300 rounded-l-md"
                     placeholder="Search artwork..."
                     defaultValue={props.query || ''}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     id="searchInput"
                 />
                 <button
@@ -93,24 +99,30 @@ export default function App(props: IAppProps) {
 
             </div>
 
-            <div className="text-gray-700 font-semibold mb-4 text-xl font-serif" data-aos = "2000">
+            <div className="text-gray-700 font-semibold mb-4 text-xl font-serif" data-aos="2000">
                 Showing <span className='text-[#C71585] font-bold'>{props.totalItems}</span>  items
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {props.objectDetails.map((object: any) => (
-                    <Link key={object.objectID} href={`/objects/${object.objectID}`} passHref>
-                        <ObjectCard
-                            primaryImage={object.primaryImage}
-                            title={object.title}
-                            medium={object.medium}
-                            artist={object.artistDisplayName}
-                            objectBeginDate={object.objectBeginDate}
-                            objectEndDate={object.objectEndDate}
-                        />
-                    </Link>
-                ))}
-            </div>
+            <Suspense fallback={<SkeletonLoader />}>
+
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {
+                        props.objectDetails.map((object: any, index: number) => (
+                            <Link key={object.objectID} href={`/objects/${object.objectID}`} data-aos="fade-in" data-aos-duration={`${(index + 1) * 500}`} passHref>
+                                <ObjectCard
+                                    primaryImage={object.primaryImage}
+                                    title={object.title}
+                                    medium={object.medium}
+                                    artist={object.artistDisplayName}
+                                    objectBeginDate={object.objectBeginDate}
+                                    objectEndDate={object.objectEndDate}
+                                />
+                            </Link>
+                        ))
+                    }
+                </div>
+            </Suspense>
 
             <div className="flex justify-between items-center mt-8">
                 {/* Previous Button */}
@@ -125,7 +137,7 @@ export default function App(props: IAppProps) {
 
                 {/* Page Info */}
                 <span className="text-gray-700 font-serif text-lg font-medium">
-                    Page<span className='text-[#C71585] font-semibold'>{props.page}</span>  of <span className='text-[#C71585] font-semibold'>{props.totalPages}</span> 
+                    Page<span className='text-[#C71585] font-semibold'>{props.page}</span>  of <span className='text-[#C71585] font-semibold'>{props.totalPages}</span>
                 </span>
 
                 {/* Next Button */}

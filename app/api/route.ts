@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 
-export async function getDepartments() {
+export async function getDepartments(): Promise<any> {
   try {
     const response = await fetch(`${API_BASE_URL}/departments`, {
       method: 'GET',

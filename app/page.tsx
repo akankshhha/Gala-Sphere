@@ -2,13 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-AOS.init();
-
 const HeroSection: React.FC = () => {
+
+  useEffect(() => {
+    AOS.init({
+      once: true,
+    });
+  }, []);
 
   return (
     <section className="bg-gradient-to-r from-[#f0e6f6] to-[#e6f5f6] text-center py-12 px-4 sm:px-6 md:px-8">

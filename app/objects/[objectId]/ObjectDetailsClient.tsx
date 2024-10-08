@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import Flickity from 'react-flickity-component';
 import 'flickity/css/flickity.css';
 import Link from 'next/link';
-import dynamic from 'next/dynamic'
+import {ArtworkDetails} from '@/app/components/reusable/ArtworkDetails';
+import { constituentsFields, artistDescriptionFields, timePeriodFields, overviewFields } from '../../utils/tabFields'
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -12,7 +14,7 @@ AOS.init();
 
 
 const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extractedText, images }) => {
-    const [activeTab, setActiveTab] = useState('Artwork Details');
+    const [activeTab, setActiveTab] = useState('Overview');
     const [isExpanded, setIsExpanded] = useState(false);
     const [showReadMore, setShowReadMore] = useState(false);
     
@@ -77,7 +79,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                         <p className="text-lg mb-4 italic text-[#C71585] font-semibold">
                             {objectDetails.artistDisplayName || 'Unknown Artist'}
                         </p>
-                        <p data-aos = "fade-in" data-aos-duration = "1000">
+                        <div data-aos = "fade-in" data-aos-duration = "1000">
                         {extractedText.description && (
                             <div className="text-gray-700 leading-relaxed">
                                 <div 
@@ -96,7 +98,7 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
                                 )}
                             </div>
                         )}
-                        </p>
+                        </div>
                     </div>
                 </div>
 
@@ -130,15 +132,17 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
             <hr className="my-8" />
 
             {/* Bottom Section: Tabs */}
+            <h2 className='text-3xl font-serif font-semibold px-10'>Artwork Details</h2>
             <div className="flex flex-col md:flex-row gap-4 p-10">
                 {/* Tabs Navigation */}
                 <div className="md:w-1/4 border-r border-gray-200">
+
                     <ul className="flex md:flex-col">
                         <li
-                            className={`p-4 cursor-pointer ${activeTab === 'Artwork Details' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
-                            onClick={() => setActiveTab('Artwork Details')}
+                            className={`p-4 cursor-pointer ${activeTab === 'Overview' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
+                            onClick={() => setActiveTab('Overview')}
                         >
-                            Artwork Details
+                            Overview
                         </li>
                         <li
                             className={`p-4 cursor-pointer ${activeTab === 'Constituents' ? 'bg-gray-200 font-bold text-[#C71585]' : ''}`}
@@ -169,40 +173,29 @@ const ObjectDetailsClient: React.FC<any> = ({ objectDetails, departmentId, extra
 
                 {/* Tabs Content */}
                 <div className="md:w-3/4 p-2">
-                    {activeTab === 'Artwork Details' && (
-                        <div className="flex flex-col gap-4" data-aos = "fade-left" data-aos-duration = "500">
-                            <p><strong>Type of the Art piece:</strong> {objectDetails.objectName || 'N/A'}</p>
-                            <p><strong>Medium:</strong> {objectDetails.medium || 'N/A'}</p>
-                            <p><strong>Dimensions:</strong> {objectDetails.dimensions || 'N/A'}</p>
-                            <p><strong>Classification:</strong> {objectDetails.classification || 'N/A'}</p>
-                            <p><strong>Accession Number:</strong> {objectDetails.accessionNumber || 'N/A'}</p>
-                        </div>
+                    {activeTab === 'Overview' && (
+                       <ArtworkDetails 
+                       objectDetails={objectDetails}
+                       fields={overviewFields}           
+                        />
                     )}
                     {activeTab === 'Constituents' && (
-                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
-                            <p><strong>Role:</strong> {objectDetails.constituents?.role || 'N/A'}</p>
-                            <p><strong>Artist:</strong> {objectDetails.constituents?.artist || 'N/A'}</p>
-                            <p><strong>Gender:</strong> {objectDetails.constituents?.gender || 'N/A'}</p>
-                            <p><strong>Constituent ID:</strong> {objectDetails.constituents?.constituentID || 'N/A'}</p>
-                        </div>
+                        <ArtworkDetails
+                        objectDetails={objectDetails.constituents[0]}
+                        fields={constituentsFields}
+                      />
                     )}
                     {activeTab === 'Artist Description' && (
-                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
-                            <p><strong>Name:</strong> {objectDetails.artistDisplayName || 'N/A'}</p>
-                            <p><strong>Role:</strong> {objectDetails.artistRole || 'N/A'}</p>
-                            <p><strong>Nationality:</strong> {objectDetails.artistNationality || 'N/A'}</p>
-                            <p><strong>Gender:</strong> {objectDetails.artistGender || 'N/A'}</p>
-                            <p><strong>Display Bio:</strong> {objectDetails.artistDisplayBio || 'N/A'}</p>
-                        </div>
+                        <ArtworkDetails
+                        objectDetails={objectDetails}
+                        fields={artistDescriptionFields}
+                      />
                     )}
                     {activeTab === 'Time Period' && (
-                        <div className="flex flex-col gap-4"  data-aos = "fade-left" data-aos-duration = "500">
-                            <p><strong>Culture:</strong> {objectDetails.culture || 'N/A'}</p>
-                            <p><strong>Period:</strong> {objectDetails.period || 'N/A'}</p>
-                            <p><strong>Dynasty:</strong> {objectDetails.dynasty || 'N/A'}</p>
-                            <p><strong>Reign:</strong> {objectDetails.reign || 'N/A'}</p>
-                            <p><strong>Object Date:</strong> {objectDetails.objectDate || 'N/A'}</p>
-                        </div>
+                         <ArtworkDetails
+                         objectDetails={objectDetails}
+                         fields={timePeriodFields}
+                       />
                     )}
                     {activeTab === 'Notes' && (
                         <div className="flex flex-col gap-4" >

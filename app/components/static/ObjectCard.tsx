@@ -20,7 +20,7 @@ const ArtCard: React.FC<ObjectCardProps> = ({ title, medium, artist, primaryImag
     <div className="bg-white shadow-md rounded-md overflow-hidden w-full sm:w-80 md:w-72 mx-auto flex flex-col h-full">
       <div className="relative w-full h-80 bg-gray-100 rounded-t-md overflow-hidden flex items-center justify-center">
         {primaryImage ? (
-          <Image src={primaryImage} alt={title} layout="fill" className="object-contain" />
+          <Image src={primaryImage} alt={title} layout="fill" objectFit='contain'/>
         ) : (
           <img src='/assets/images/unavailable-image.png' alt='image unavailable'  className='w-12'/>
         )}

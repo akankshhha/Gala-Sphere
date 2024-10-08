@@ -30,7 +30,7 @@ const DepartmentPage = async ({ params, searchParams }: { params: { departmentId
     const department = departments.find((dept: { departmentId: number, displayName: string }) => dept.departmentId === Number(departmentId));
 
     return (
-        <DepartmentObjectsClient 
+             <DepartmentObjectsClient 
             objectDetails={objectDetails} 
             totalPages={totalPages} 
             department={department} 
