@@ -1,0 +1,3 @@
+## Locations
+
+With the expansion of the building complete, The Met has continued to refine and reorganize its collection. In 1998, the Arts of Korea gallery opened to the public, completing a major suite of galleries devoted to the arts of Asia. The Ancient Near Eastern Art galleries reopened to the public in 1999 following a renovation. In 2007, several major projects at the south end of the building were completed, most notably the 15-year renovation and reinstallation of the entire suite of Greek and Roman Art galleries. Galleries for Oceanic and Native North American Art also opened in 2007, as well as the new Galleries for Nineteenth- and Early Twentieth-Century Paintings and Sculpture and the Ruth and Harold D. Uris Center for Education.

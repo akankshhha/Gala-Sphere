@@ -19,7 +19,9 @@
     "react-dom": "^18",
     "react-feather": "^2.0.10",
     "react-flickity-component": "^4.0.7",
-    "react-loading-skeleton": "^3.4.0"
+    "react-loading-skeleton": "^3.4.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",

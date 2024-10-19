@@ -1,6 +1,10 @@
 const API_BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
+import { remark } from 'remark';
+import html from 'remark-html';
 
 
 export async function getDepartments(): Promise<any> {
@@ -100,20 +104,49 @@ export async function searchInDepartment(query: string, departmentId: number, st
 
 
 export async function GET(request: Request) {
-  const url = new URL(request.url).searchParams.get('url'); // Extract URL from query parameters
+  const url = new URL(request.url);
+  const apiUrl = url.searchParams.get('url'); // For external URL
+  const section = url.searchParams.get('section'); // For section identifier
 
   if (!url) {
     return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
+  }if (apiUrl) {
+    try {
+      const { data } = await axios.get(apiUrl);
+      return NextResponse.json({ data });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+    }
   }
 
-  try {
-    const { data } = await axios.get(url);
-    return NextResponse.json({ data });
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+  if (section) {
+    let filePath;
+    if (section === 'section1') {
+      filePath = path.join(process.cwd(), 'app/utils/information', 'history.md');
+    } else if (section === 'section2') {
+      filePath = path.join(process.cwd(), 'app/utils/information', 'locations.md');
+    } else if (section === 'section3') {
+      filePath = path.join(process.cwd(), 'app/utils/information', 'archives.md');
+    } else {
+      return NextResponse.json({ error: 'Invalid section' }, { status: 400 });
+    }
+
+    try {
+      const markdownContent = fs.readFileSync(filePath, 'utf8');
+      const processedContent = await remark().use(html, { sanitize: false }).process(markdownContent);
+      const contentHtml = processedContent.toString();
+      return NextResponse.json({ contentHtml });
+    } catch (error) {
+      console.error('Error reading markdown file:', error);
+      return NextResponse.json({ error: 'Failed to load content' }, { status: 500 });
+    }
   }
+
+  return NextResponse.json({ error: 'No URL or section provided' }, { status: 400 });
 }
+
+
 
 
 
