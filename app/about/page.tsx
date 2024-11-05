@@ -1,25 +1,33 @@
 import fs from 'fs';
 import path from 'path';
 import { remark } from 'remark';
-import html from 'remark-html'; // This handles raw HTML as well
-import AboutClient from './AboutClient'; // Import the client component
+import html from 'remark-html';
+import AboutClient from './AboutClient';
 
 const About = async () => {
-  // Read markdown file content on the server
-  const filePath = path.join(process.cwd(), 'app/utils/information', 'history.md');
-  const markdownContent = fs.readFileSync(filePath, 'utf8');
+  const dirPath = path.join(process.cwd(), 'app/utils/information');
+  const fileNames = fs.readdirSync(dirPath).filter(file => file.endsWith('.md'));
 
-  // Convert markdown content to HTML using remark-html (which handles raw HTML by default)
-  const processedContent = await remark()
-    .use(html, { sanitize: false }) // Disable sanitization to allow raw HTML
-    .process(markdownContent);
+  // Object to hold the HTML content of each markdown file
+  const contentHtml:any = {};
 
-  const contentHtml = processedContent.toString();
+  // Read and convert each markdown file to HTML
+  for (const fileName of fileNames) {
+    const filePath = path.join(dirPath, fileName);
+    const markdownContent = fs.readFileSync(filePath, 'utf8');
+    const processedContent = await remark()
+      .use(html, { sanitize: false })
+      .process(markdownContent);
+
+    // Use the filename (without extension) as the key
+    const sectionName = path.basename(fileName, '.md');
+    contentHtml[sectionName] = processedContent.toString();
+  }
 
   return (
     <div className="flex">
-      {/* Pass the HTML content to the client component */}
-      <AboutClient initialContentHtml={contentHtml} />
+      {/* Pass the dynamically generated contentHtml to the client component */}
+      <AboutClient contentHtml={contentHtml} />
     </div>
   );
 };
